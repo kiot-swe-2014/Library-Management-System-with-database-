@@ -44,7 +44,6 @@ public class Catagory extends javax.swing.JFrame {
         try {
             pst =conn.prepareStatement("select * from catagory");
             rs = pst.executeQuery(); 
-            
             ResultSetMetaData rsd=rs.getMetaData();
             c = rsd.getColumnCount();
             
