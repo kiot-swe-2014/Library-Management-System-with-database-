@@ -259,24 +259,12 @@ public class Catagory extends javax.swing.JFrame {
         String catagory=txtcatagory.getText().trim();
         String status=txtstatus.getSelectedItem()!=null?txtstatus.getSelectedItem().toString():"";
         
-        if (catagory.isEmpty() && status.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Category name and status cannot be empty!", "Warning", JOptionPane.WARNING_MESSAGE);
-        txtcatagory.requestFocus(); // Set focus back to the input field
-        return; // Exit the method if both are empty
-    }
 
     // Check if the category name is empty
     if (catagory.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Category name cannot be empty!", "Warning", JOptionPane.WARNING_MESSAGE);
         txtcatagory.requestFocus(); // Set focus back to the input field
         return; // Exit the method if the category name is empty
-    }
-
-    // Check if the status is not selected
-    if (status.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please select a status!", "Warning", JOptionPane.WARNING_MESSAGE);
-        txtstatus.requestFocus(); // Set focus back to the status dropdown
-        return; // Exit the method if status is not selected
     }
         try {
             
@@ -375,15 +363,18 @@ public class Catagory extends javax.swing.JFrame {
            return; // Exit the method if no row is selected
           }
           int id=Integer.parseInt(d1.getValueAt(selectIndex, 0).toString());
-
-        
+          int confirmation = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this category?", "Confirm Deletion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+    
+       if (confirmation == JOptionPane.YES_OPTION) 
+       {
         try {
             pst =conn.prepareStatement("delete from catagory where id=?");
             pst.setInt(1, id);
             int k= pst.executeUpdate();
             if(k==1)
             {
-                JOptionPane.showMessageDialog(this, "Catagory Deleted Successfully", "Info", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Catagory Deleted Successfully", "Info", 
+                        JOptionPane.INFORMATION_MESSAGE);
                 txtcatagory.setText("");
                 txtstatus.setSelectedIndex(-1);
                 txtcatagory.requestFocus();
@@ -391,13 +382,15 @@ public class Catagory extends javax.swing.JFrame {
                 jButton1.setEnabled(true);
             }
             else{
-               JOptionPane.showMessageDialog(this, "An error occurred while processing your request.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+          JOptionPane.showMessageDialog(this, "Error: Category could not be deleted.",
+                  "Error", JOptionPane.ERROR_MESSAGE);   }
+        
         } catch (SQLException ex) {
             Logger.getLogger(Catagory.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    }
+       
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
