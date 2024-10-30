@@ -17,7 +17,7 @@ public class Member extends javax.swing.JFrame {
     public Member() {
         initComponents();
         Connect();
-        author_load();
+        member_load();
         
     }
     Connection conn;
@@ -38,11 +38,11 @@ public class Member extends javax.swing.JFrame {
         }
     }
     
-    public void author_load()
+    public void member_load()
     {
         int c;
         try {
-            pst =conn.prepareStatement("select * from author");
+            pst =conn.prepareStatement("select * from members");
             rs = pst.executeQuery(); 
             
             ResultSetMetaData rsd=rs.getMetaData();
@@ -55,7 +55,7 @@ public class Member extends javax.swing.JFrame {
                 Vector v2=new Vector();
                 for(int i=1;i<=c;i++){
                     v2.add(rs.getString("id"));
-                    v2.add(rs.getString("author_name"));
+                    v2.add(rs.getString("member_name"));
                     v2.add(rs.getString("address"));
                     v2.add(rs.getString("phone_number"));
                     
@@ -101,7 +101,7 @@ public class Member extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Author");
+        jLabel1.setText("Members");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 153, 0));
@@ -158,7 +158,7 @@ public class Member extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Author Name", "Address", "Phone Number"
+                "ID", "Member  Name", "Address", "Phone Number"
             }
         ) {
             Class[] types = new Class [] {
@@ -193,9 +193,6 @@ public class Member extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,7 +215,10 @@ public class Member extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtname)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(135, 135, 135)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(24, Short.MAX_VALUE))
@@ -236,9 +236,9 @@ public class Member extends javax.swing.JFrame {
                             .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(56, 56, 56)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtph, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -290,18 +290,18 @@ public class Member extends javax.swing.JFrame {
     }
         try {
          // Proceed with insertion
-            pst =conn.prepareStatement("insert into author(author_name,address,phone_number) values(?,?,?)");
+            pst =conn.prepareStatement("insert into members(member_name,address,phone_number) values(?,?,?)");
             pst.setString(1, name);
             pst.setString(2,address);
             pst.setString(3, phone);
             int k= pst.executeUpdate();
             if(k==1){
-                JOptionPane.showMessageDialog(this, "Author Created Successfully", "Info", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Member Created Successfully", "Info", JOptionPane.INFORMATION_MESSAGE);
                 txtname.setText("");
                 txtadd.setText("");
                 txtph.setText("");
                 txtname.requestFocus();
-                author_load();
+                member_load();
             }
             else{
                JOptionPane.showMessageDialog(this, "An error occurred while processing your request.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -330,7 +330,7 @@ public class Member extends javax.swing.JFrame {
           DefaultTableModel d1=(DefaultTableModel)jTable1.getModel();
           int selectIndex =jTable1.getSelectedRow();
          if (selectIndex == -1) {
-        JOptionPane.showMessageDialog(this, "Please select an author to update.", "Error", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Please select an member to update.", "Error", JOptionPane.WARNING_MESSAGE);
         return;
     }
         
@@ -343,19 +343,19 @@ public class Member extends javax.swing.JFrame {
     }
         int id=Integer.parseInt(d1.getValueAt(selectIndex, 0).toString());
         try {
-            pst = conn.prepareStatement("update author set author_name=?, address=?, phone_number=? where id=?");
+            pst = conn.prepareStatement("update members set member_name=?, address=?, phone_number=? where id=?");
             pst.setString(1, name);
             pst.setString(2, address);
             pst.setString(3, phone);
             pst.setInt(4, id);
             int k = pst.executeUpdate();
             if (k == 1) {
-                JOptionPane.showMessageDialog(this, "Author Updated Successfully", "Info", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "member Updated Successfully", "Info", JOptionPane.INFORMATION_MESSAGE);
                 txtname.setText("");
                 txtadd.setText("");
                 txtph.setText("");
                 txtname.requestFocus();
-                author_load();
+                member_load();
                 jButton1.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(this, "An error occurred while processing your request.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -374,7 +374,7 @@ public class Member extends javax.swing.JFrame {
           
          if (selectIndex == -1)
          {
-          JOptionPane.showMessageDialog(this, "Please select a Author to delete.", "Error", JOptionPane.WARNING_MESSAGE);
+          JOptionPane.showMessageDialog(this, "Please select a member to delete.", "Error", JOptionPane.WARNING_MESSAGE);
            return; // Exit the method if no row is selected
           }
           int confirmation = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this category?", "Confirm Deletion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -384,22 +384,22 @@ public class Member extends javax.swing.JFrame {
          int id=Integer.parseInt(d1.getValueAt(selectIndex, 0).toString());
 
         try {
-            pst =conn.prepareStatement("delete from Author where id=?");
+            pst =conn.prepareStatement("delete from members where id=?");
             pst.setInt(1, id);
             int k= pst.executeUpdate();
             if(k==1)
             {
-                JOptionPane.showMessageDialog(this, "Author Deleted Successfully", "Info", 
+                JOptionPane.showMessageDialog(this, "member Deleted Successfully", "Info", 
                         JOptionPane.INFORMATION_MESSAGE);
                 txtname.setText("");
                 txtadd.setText("");
                 txtph.setText("");
                 txtname.requestFocus();
-                author_load();
+                member_load();
                 jButton1.setEnabled(true);
             }
             else{
-          JOptionPane.showMessageDialog(this, "Error: Author could not be deleted.",
+          JOptionPane.showMessageDialog(this, "Error: member could not be deleted.",
                   "Error", JOptionPane.ERROR_MESSAGE);   }
         
         } catch (SQLException ex) {
