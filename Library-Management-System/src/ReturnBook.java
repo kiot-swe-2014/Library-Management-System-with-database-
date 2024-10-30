@@ -19,8 +19,7 @@ public class ReturnBook extends javax.swing.JFrame {
     public ReturnBook() {
         initComponents();
         Connect();
-        book();
-        Issuebook_load();
+      Returnbook_load();
     }
    
     Connection conn;
@@ -42,38 +41,12 @@ public class ReturnBook extends javax.swing.JFrame {
         }
     }
     
-    public class BookItem{
-        int id;
-        String name;
-        public BookItem(int id ,String name){
-            this.id=id;
-            this.name=name;
-            
-        }
-        public String toString(){
-            return name;
-        }
-    }
-    
-    public void book()
-    {
-         try {
-            pst=conn.prepareStatement("select * from book");
-            rs=pst.executeQuery();
-            txtbook.removeAllItems();
-            
-            while(rs.next()){
-                txtbook.addItem(new BookItem(rs.getInt(1),rs.getString(2)));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Book.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    public void   Issuebook_load()
+
+    public void   Returnbook_load()
     {
         int c;
         try {
-            pst=conn.prepareStatement("select l.id,m.member_name,b.book_name,l.issueddate,l.return_date from lendbook l JOIN members m  ON l.memberid=m.id JOIN book b ON l.bookid=b.id ");
+            pst=conn.prepareStatement("select * from returnbook");
             rs = pst.executeQuery(); 
             
             ResultSetMetaData rsd=rs.getMetaData();
@@ -85,11 +58,13 @@ public class ReturnBook extends javax.swing.JFrame {
             while(rs.next()){
                 Vector v2=new Vector();
                 for(int i=1;i<=c;i++){
-                    v2.add(rs.getString("l.id"));
-                    v2.add(rs.getString("m.member_name"));
-                    v2.add(rs.getString("b.book_name"));
-                    v2.add(rs.getString("l.issueddate"));
-                    v2.add(rs.getString("l.return_date"));
+                    v2.add(rs.getString("id"));
+                    v2.add(rs.getString("MemberId"));
+                    v2.add(rs.getString("MemberName"));
+                    v2.add(rs.getString("BookName"));
+                    v2.add(rs.getString("ReturnDate"));
+                    v2.add(rs.getString("DaysElap"));
+                    v2.add(rs.getString("Fine"));
                 }
                 
                 d.addRow(v2);
@@ -122,11 +97,13 @@ public class ReturnBook extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtbook = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
-        txtissuedate = new com.toedter.calendar.JDateChooser();
-        txtname = new javax.swing.JTextField();
-        txtrdate = new com.toedter.calendar.JDateChooser();
+        txtname = new javax.swing.JLabel();
+        txtbook = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtelap = new javax.swing.JTextField();
+        txtfine = new javax.swing.JTextField();
+        txtrdate = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,7 +112,7 @@ public class ReturnBook extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Book");
+        jLabel1.setText("Return Book");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 153, 0));
@@ -197,11 +174,11 @@ public class ReturnBook extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Member ID", "Member Name", "Book", "Date", "Return Date"
+                "ID", "Member ID", "Member Name", "Book", "Return Date", "Days Elap", "Fine"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -218,26 +195,40 @@ public class ReturnBook extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 153, 0));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Date");
+        jLabel4.setText("Days Elap");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 153, 0));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Member Name");
 
-        txtbook.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "" }));
-
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 153, 0));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Return Date");
 
-        txtname.setText(" ");
-        txtname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtnameActionPerformed(evt);
-            }
-        });
+        txtname.setBackground(new java.awt.Color(0, 102, 102));
+        txtname.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        txtname.setForeground(new java.awt.Color(255, 255, 255));
+
+        txtbook.setBackground(new java.awt.Color(0, 102, 102));
+        txtbook.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        txtbook.setForeground(new java.awt.Color(255, 255, 255));
+        txtbook.setText(" ");
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 153, 0));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Fine");
+
+        txtelap.setText("jTextField1");
+
+        txtfine.setText("jTextField2");
+
+        txtrdate.setBackground(new java.awt.Color(0, 102, 102));
+        txtrdate.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        txtrdate.setForeground(new java.awt.Color(255, 255, 255));
+        txtrdate.setText(" ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -246,35 +237,35 @@ public class ReturnBook extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(96, 96, 96)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtid)
-                                    .addComponent(txtbook, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtissuedate, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                                    .addComponent(txtname)
-                                    .addComponent(txtrdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtid, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtname, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtbook, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtelap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                            .addComponent(txtfine)
+                            .addComponent(txtrdate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(40, Short.MAX_VALUE))
@@ -283,7 +274,7 @@ public class ReturnBook extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -291,31 +282,37 @@ public class ReturnBook extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
+                        .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36)
+                        .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtbook, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(37, 37, 37)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtissuedate, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtrdate, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
-                        .addGap(69, 69, 69)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtrdate, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(txtelap, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtfine, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(47, 47, 47)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(24, Short.MAX_VALUE))
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(34, 34, 34))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -345,35 +342,39 @@ public class ReturnBook extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String mid=txtid.getText();
-        BookItem bitem=(BookItem)txtbook.getSelectedItem();
-        
-        SimpleDateFormat date_format=new SimpleDateFormat("yyyy-MM-dd");
-        String issuedate=date_format.format(txtissuedate.getDate());
-        
-        SimpleDateFormat date_format1=new SimpleDateFormat("yyyy-MM-dd");
-        String returndate=date_format1.format(txtissuedate.getDate());
-
-        if (mid.isEmpty() || issuedate.isEmpty() || returndate.isEmpty() ) {
-        JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Warning", JOptionPane.WARNING_MESSAGE);
+       String mid=txtid.getText();
+       String mname=txtname.getText();
+       String bname=txtbook.getText();
+       String returndate=txtrdate.getText();
+       String elpd=txtelap.getText();
+       String fine=txtfine.getText();
+        if (mid.isEmpty()  ) {
+        JOptionPane.showMessageDialog(this, "Please fill in the field.", "Warning", JOptionPane.WARNING_MESSAGE);
         return;
     }
         try {
          // Proceed with insertion
-            pst =conn.prepareStatement("insert into lendbook(MemberID,BookID,IssuedDate,Return_Date) values(?,?,?,?)");
+            pst =conn.prepareStatement("insert into returnbook(MemberID,MemberName,BookName,ReturnDate,DaysElap,Fine) values(?,?,?,?,?,?)");
             pst.setString(1, mid);
-            pst.setInt(2,bitem.id);
-            pst.setString(3,issuedate);
+            pst.setString(2,mname);
+            pst.setString(3,bname);
             pst.setString(4,returndate);
+            pst.setString(5, elpd);
+            pst.setString(6, fine);
             int k= pst.executeUpdate();
+            pst =conn.prepareStatement("delete from lendbook where MemberID=?");
+            pst.setString(k, mid);
+            pst.executeQuery();
             if(k==1){
-                JOptionPane.showMessageDialog(this, "Book Issued Successfully", "Info", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "return Book  Successfully", "Info", JOptionPane.INFORMATION_MESSAGE);
                 txtid.setText("");
-                txtbook.setSelectedIndex(-1);
                 txtname.setText("");
-                
+                txtbook.setText("");
+                txtrdate.setText("");
+                txtelap.setText("");
+                txtfine.setText("");
                 txtid.requestFocus();
-                Issuebook_load();
+                Returnbook_load();
             }
             else{
                JOptionPane.showMessageDialog(this, "An error occurred while processing your request.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -414,29 +415,47 @@ public class ReturnBook extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void txtnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtnameActionPerformed
-
     private void txtidKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtidKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            String mid=txtid.getText();
-            try {
-                pst=conn.prepareStatement("select * from members where id = ?");
-                pst.setString(1,mid);
-                rs=pst.executeQuery();
-                if(rs.next()== false){
-                    JOptionPane.showMessageDialog(this,"Member ID not Found");
+        
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER){
+        String id=txtid.getText();
+        try {
+            pst=conn.prepareStatement("select m.member_name,b.book_name,l.return_date,DATEDIFF(now(),l.return_date) as Elap from lendbook l JOIN members m ON l.MemberID =m.id  JOIN book b ON l.bookid=b.id and l.MemberID=?");
+            pst.setString(1, id);
+            rs= pst.executeQuery();
+            
+            if(rs.next()== false){
+                JOptionPane.showMessageDialog(this, "Member ID Not Found");
+            }
+            else{
+                String mname=rs.getString("m.member_name");
+                String bname=rs.getString("b.book_name");
+                
+                txtname.setText(mname.trim());
+                txtbook.setText(bname.trim());
+                
+                
+                String date=rs.getString("l.return_date");
+                txtrdate.setText(date.trim());
+                
+                String elap=rs.getString("Elap");
+                int elaped=Integer.parseInt(elap);
+                if(elaped>0)
+               {
+                txtelap.setText(elap);
+                int fine=elaped*100;
+                txtfine.setText(String.valueOf(fine));
                 }
                 else{
-                    String membername=rs.getString("member_name");
-                    txtname.setText(membername.trim());
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(LendBook.class.getName()).log(Level.SEVERE, null, ex);
+                txtelap.setText("0");
+                txtfine.setText("0");
             }
+            }
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(ReturnBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
     }//GEN-LAST:event_txtidKeyPressed
 
@@ -486,13 +505,15 @@ public class ReturnBook extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JComboBox txtbook;
+    private javax.swing.JLabel txtbook;
+    private javax.swing.JTextField txtelap;
+    private javax.swing.JTextField txtfine;
     private javax.swing.JTextField txtid;
-    private com.toedter.calendar.JDateChooser txtissuedate;
-    private javax.swing.JTextField txtname;
-    private com.toedter.calendar.JDateChooser txtrdate;
+    private javax.swing.JLabel txtname;
+    private javax.swing.JLabel txtrdate;
     // End of variables declaration//GEN-END:variables
 }
