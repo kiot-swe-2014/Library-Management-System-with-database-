@@ -465,23 +465,83 @@ public class Book extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-                  //  DefaultTableModel d1=(DefaultTableModel)jTable1.getModel();
-                    //int selectIndex =jTable1.getSelectedRow();
-                    //int id=Integer.parseInt(d1.getValueAt(selectIndex, 0).toString());
-                    //txtname.setText(d1.getValueAt(selectIndex, 1).toString());
-                    //txtcat.setSelectedIndex(d1.getValueAt(selectIndex, 2).toString());
-                    //txtcont.setText(d1.getValueAt(selectIndex, 3).toString());
-                    //jButton1.setEnabled(false);
+                 DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    int selectedRow = jTable1.getSelectedRow();
+
+    txtname.setText(model.getValueAt(selectedRow, 1).toString());
+    txtcat.setSelectedItem(model.getValueAt(selectedRow, 2).toString());
+    txtaut.setSelectedItem(model.getValueAt(selectedRow, 3).toString());
+    txtpub.setSelectedItem(model.getValueAt(selectedRow, 4).toString());
+    txtcont.setText(model.getValueAt(selectedRow, 5).toString());
+    txtnop.setText(model.getValueAt(selectedRow, 6).toString());
+    txtedt.setText(model.getValueAt(selectedRow, 7).toString());
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
+        String bname = txtname.getText();
+    catagoryItem citem = (catagoryItem) txtcat.getSelectedItem();
+    authorItem aitem = (authorItem) txtaut.getSelectedItem();
+    publisherItem pitem = (publisherItem) txtpub.getSelectedItem();
+    String content = txtcont.getText();
+    String page = txtnop.getText();
+    String edit = txtedt.getText();
+
+    int selectedRow = jTable1.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a book to update.", "Warning", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    int bookId = Integer.parseInt(jTable1.getValueAt(selectedRow, 0).toString());
+
+    try {
+        pst = conn.prepareStatement("UPDATE book SET book_name=?, catagory=?, author=?, publisher=?, content=?, no_of_pages=?, edition=? WHERE id=?");
+        pst.setString(1, bname);
+        pst.setInt(2, citem.id);
+        pst.setInt(3, aitem.id);
+        pst.setInt(4, pitem.id);
+        pst.setString(5, content);
+        pst.setString(6, page);
+        pst.setString(7, edit);
+        pst.setInt(8, bookId);
+
+        int k = pst.executeUpdate();
+        if (k == 1) {
+            JOptionPane.showMessageDialog(this, "Book updated successfully.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            Book_load(); // Refresh the table
+        } else {
+            JOptionPane.showMessageDialog(this, "An error occurred while updating the book.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(Book.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
+         int selectedRow = jTable1.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a book to delete.", "Warning", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    int bookId = Integer.parseInt(jTable1.getValueAt(selectedRow, 0).toString());
+
+    try {
+        pst = conn.prepareStatement("DELETE FROM book WHERE id=?");
+        pst.setInt(1, bookId);
+
+        int k = pst.executeUpdate();
+        if (k == 1) {
+            JOptionPane.showMessageDialog(this, "Book deleted successfully.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            Book_load(); // Refresh the table
+        } else {
+            JOptionPane.showMessageDialog(this, "An error occurred while deleting the book.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(Book.class.getName()).log(Level.SEVERE, null, ex);
+    }
       
     }//GEN-LAST:event_jButton3ActionPerformed
     

@@ -98,16 +98,16 @@ public class ReturnBook extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtname = new javax.swing.JLabel();
-        txtbook = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtelap = new javax.swing.JTextField();
         txtfine = new javax.swing.JTextField();
+        txtname = new javax.swing.JLabel();
+        txtbook = new javax.swing.JLabel();
         txtrdate = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
@@ -207,28 +207,31 @@ public class ReturnBook extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Return Date");
 
-        txtname.setBackground(new java.awt.Color(0, 102, 102));
-        txtname.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        txtname.setForeground(new java.awt.Color(255, 255, 255));
-
-        txtbook.setBackground(new java.awt.Color(0, 102, 102));
-        txtbook.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        txtbook.setForeground(new java.awt.Color(255, 255, 255));
-        txtbook.setText(" ");
-
         jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 153, 0));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Fine");
 
-        txtelap.setText("jTextField1");
+        txtelap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtelapActionPerformed(evt);
+            }
+        });
 
-        txtfine.setText("jTextField2");
+        txtfine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtfineActionPerformed(evt);
+            }
+        });
 
-        txtrdate.setBackground(new java.awt.Color(0, 102, 102));
-        txtrdate.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        txtname.setForeground(new java.awt.Color(255, 255, 255));
+        txtname.setText("jLabel6");
+
+        txtbook.setForeground(new java.awt.Color(255, 255, 255));
+        txtbook.setText("jLabel6");
+
         txtrdate.setForeground(new java.awt.Color(255, 255, 255));
-        txtrdate.setText(" ");
+        txtrdate.setText("jLabel6");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -244,7 +247,7 @@ public class ReturnBook extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -258,17 +261,17 @@ public class ReturnBook extends javax.swing.JFrame {
                                 .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
+                        .addGap(61, 61, 61)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtid, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtname, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtbook, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtelap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                             .addComponent(txtfine)
-                            .addComponent(txtrdate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txtname, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtbook, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtrdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,17 +286,17 @@ public class ReturnBook extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(37, 37, 37)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(37, 37, 37)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                            .addComponent(txtname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtbook, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(37, 37, 37)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtrdate, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(49, 49, 49)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                            .addComponent(txtrdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -329,7 +332,7 @@ public class ReturnBook extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -400,12 +403,70 @@ public class ReturnBook extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
+        String mid = txtid.getText();
+    String mname = txtname.getText();
+    String bname = txtbook.getText();
+    String returndate = txtrdate.getText();
+    String elpd = txtelap.getText();
+    String fine = txtfine.getText();
+
+    if (mid.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in the field.", "Warning", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    try {
+        pst = conn.prepareStatement("UPDATE returnbook SET MemberName = ?, BookName = ?, ReturnDate = ?, DaysElap = ?, Fine = ? WHERE MemberID = ?");
+        pst.setString(1, mname);
+        pst.setString(2, bname);
+        pst.setString(3, returndate);
+        pst.setString(4, elpd);
+        pst.setString(5, fine);
+        pst.setString(6, mid);
+
+        int k = pst.executeUpdate();
+
+        if (k == 1) {
+            JOptionPane.showMessageDialog(this, "Book return details updated successfully", "Info", JOptionPane.INFORMATION_MESSAGE);
+            Returnbook_load(); // Refresh the table
+        } else {
+            JOptionPane.showMessageDialog(this, "An error occurred while updating.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(ReturnBook.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
+        String mid = txtid.getText();
+
+    if (mid.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select a record to delete.", "Warning", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    try {
+        pst = conn.prepareStatement("DELETE FROM returnbook WHERE MemberID = ?");
+        pst.setString(1, mid);
+
+        int k = pst.executeUpdate();
+
+        if (k == 1) {
+            JOptionPane.showMessageDialog(this, "Book return details deleted successfully", "Info", JOptionPane.INFORMATION_MESSAGE);
+            Returnbook_load(); // Refresh the table
+            txtid.setText("");
+            txtname.setText("");
+            txtbook.setText("");
+            txtrdate.setText("");
+            txtelap.setText("");
+            txtfine.setText("");
+        } else {
+            JOptionPane.showMessageDialog(this, "An error occurred while deleting.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(ReturnBook.class.getName()).log(Level.SEVERE, null, ex);
+    }
       
     }//GEN-LAST:event_jButton3ActionPerformed
     
@@ -458,6 +519,14 @@ public class ReturnBook extends javax.swing.JFrame {
         }
         }
     }//GEN-LAST:event_txtidKeyPressed
+
+    private void txtelapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtelapActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtelapActionPerformed
+
+    private void txtfineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfineActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtfineActionPerformed
 
     /**
      * @param args the command line arguments
